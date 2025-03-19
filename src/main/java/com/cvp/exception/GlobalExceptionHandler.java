@@ -28,23 +28,10 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<Map<String, String>> handleTaskNotFoundException(InvalidEntityException ex) {
+    public ResponseEntity<Map<String, String>> notFoundException(InvalidEntityException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("message", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<Map<String, String>> handleUserNotFoundException(InvalidEntityException ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<Map<String, String>> handleOrganizationNotFoundException(InvalidEntityException ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
 }

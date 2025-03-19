@@ -56,7 +56,7 @@ public class OrganizationController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}/tasks")
+    @GetMapping("/{org_id}/tasks")
     public ResponseEntity<List<Task>> getTasksByOrganization(@PathVariable Long org_id) {
         List<Task> tasks = organizationService.getTasksByOrganizationId(org_id);
 

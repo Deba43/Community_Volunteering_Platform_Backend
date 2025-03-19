@@ -59,7 +59,14 @@ public class OrganizationService {
     }
 
     public List<Task> getTasksByOrganizationId(Long org_id) {
-        return taskRepository.findByOrg_Id(org_id);
+        List<Task> tasks = taskRepository.findByOrg_Id(org_id);
+        
+        if (tasks.isEmpty()) {
+            throw new InvalidEntityException("No tasks found for Organization with ID " + org_id);
+        }
+        
+        return tasks;
     }
     
+
 }
