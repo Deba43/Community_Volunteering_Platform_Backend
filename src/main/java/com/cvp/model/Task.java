@@ -3,6 +3,8 @@ package com.cvp.model;
 import java.time.*;
 
 import com.cvp.enums.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -59,6 +61,7 @@ public class Task {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id")
+    @JsonBackReference 
     private Organization org;
 
     @PrePersist

@@ -1,6 +1,10 @@
 package com.cvp.model;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -44,6 +48,7 @@ public class Organization {
 
     // One-to-Many Relationship with Task
     @OneToMany(mappedBy = "org", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("org") 
     private List<Task> tasks;
 
 }
