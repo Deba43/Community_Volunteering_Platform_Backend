@@ -1,10 +1,14 @@
 package com.cvp.controller;
 
 import com.cvp.service.OrganizationService;
+import com.cvp.service.TaskSignupService;
+import com.cvp.exception.InvalidEntityException;
 import com.cvp.model.Organization;
 import com.cvp.model.Task;
+import com.cvp.model.TaskSignup;
 
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,11 +21,15 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class OrganizationController {
 
+    @Autowired
     private final OrganizationService organizationService;
 
     @Autowired
-    public OrganizationController(OrganizationService organizationService) {
+    private final TaskSignupService taskSignupService;
+
+    OrganizationController(OrganizationService organizationService, TaskSignupService taskSignupService) {
         this.organizationService = organizationService;
+        this.taskSignupService = taskSignupService;
     }
 
     @GetMapping("/all")
@@ -61,10 +69,21 @@ public class OrganizationController {
         List<Task> tasks = organizationService.getTasksByOrganizationId(org_id);
 
         if (tasks.isEmpty()) {
-            return ResponseEntity.noContent().build();
+            throw new InvalidEntityException("No Task found for this Organization : " + org_id);
         }
 
         return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/{org_id}/volunteers")
+    public ResponseEntity<List<TaskSignup>> getVolunteersByOrganization(@PathVariable Long org_id) {
+        List<TaskSignup> volunteers = taskSignupService.getVolunteersByOrganization(org_id);
+
+        if (volunteers.isEmpty()) {
+            throw new InvalidEntityException("No Volunteers found for this Organization : " + org_id);
+        }
+
+        return ResponseEntity.ok(volunteers);
     }
 
 }

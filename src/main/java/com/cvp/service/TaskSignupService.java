@@ -29,8 +29,7 @@ public class TaskSignupService {
         }
 
         boolean alreadyRegistered = taskSignupRepository.existsByVolunteerNameAndTaskNameAndSignupDate(
-            taskSignup.getVolunteerName(), taskSignup.getTaskName(), taskSignup.getSignupDate()
-        );
+                taskSignup.getVolunteerName(), taskSignup.getTaskName(), taskSignup.getSignupDate());
 
         if (alreadyRegistered) {
             return "You have already registered for this task on the selected date.";
@@ -39,17 +38,19 @@ public class TaskSignupService {
 
             // Send confirmation email with details
             mailSender.sendEmailForTaskSignUp(
-                "something@gmail.com",    // Put your gmail
-                taskSignup.getTaskName(),
-                taskSignup.getVolunteerName(),
-                taskSignup.getSignupDate()
-            );
+                    "devcloud48@gmail.com", // Put your gmail
+                    taskSignup.getTaskName(),
+                    taskSignup.getVolunteerName(),
+                    taskSignup.getSignupDate());
 
             return "Registration Successful!";
-        
+
+        }
+
     }
 
+    public List<TaskSignup> getVolunteersByOrganization(Long orgId) {
+        return taskSignupRepository.findVolunteersByOrganization(orgId);
     }
 
 }
-

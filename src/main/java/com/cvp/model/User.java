@@ -25,19 +25,19 @@ public class User {
     private Long id;
 
     @NotEmpty(message = "Provide value for First name")
-    @Column(length=50)
+    @Column(length = 50)
     private String firstName;
 
     @NotEmpty(message = "Provide value for last name")
-    @Column(length=50)
+    @Column(length = 50)
     private String lastName;
-    
+
     @Column(nullable = false)
     private String userName;
 
     @NotEmpty(message = "Provide value for password")
     @Size(min = 8, message = "Your Password must be at least 8 character long")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,}$", message = "Password must contain at least one letter, one number, and one special character")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?]).{8,}$", message = "Password must contain at least one letter, one number, and one special character")
     @Column(nullable = false)
     private String password;
 
@@ -60,5 +60,4 @@ public class User {
     @Column(nullable = false)
     private String gender;
 
-   
 }
