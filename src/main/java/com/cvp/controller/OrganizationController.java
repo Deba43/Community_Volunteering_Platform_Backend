@@ -43,25 +43,40 @@ public class OrganizationController {
     }
 
     @PostMapping("/register")
-    public String registerOrganization(@Valid @RequestBody Organization organization, BindingResult result) {
+    public ResponseEntity<?> registerOrganization(@Valid @RequestBody Organization organization, BindingResult result)
+            throws InvalidEntityException {
         if (result.hasErrors()) {
-            return result.getFieldErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return organizationService.registerOrganization(organization);
+        String response = organizationService.registerOrganization(organization);
+        if (response.contains("successful")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PutMapping("/update")
-    public String updateOrganization(@Valid @RequestBody Organization organization, BindingResult result) {
+    public ResponseEntity<?> updateOrganization(@Valid @RequestBody Organization organization, BindingResult result) {
         if (result.hasErrors()) {
-            return result.getFieldErrors().get(0).getDefaultMessage();
+            return ResponseEntity.badRequest().body(result.getFieldErrors().get(0).getDefaultMessage());
         }
-        return organizationService.updateOrganization(organization);
+        String response = organizationService.updateOrganization(organization);
+        if (response.contains("successfully")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteOrganization(@PathVariable Long id) {
+    public ResponseEntity<String> deleteOrganization(@PathVariable Long id) throws InvalidEntityException {
         String response = organizationService.deleteOrganization(id);
-        return ResponseEntity.ok(response);
+        if (response.contains("deleted successfully")) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @GetMapping("/{org_id}/tasks")

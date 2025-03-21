@@ -13,9 +13,16 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/organization/**").permitAll()
+                        .requestMatchers("/organization/**", "/organizations/**").permitAll()
                         .requestMatchers("/task/**").permitAll()
+                        .requestMatchers("/users/register", "/users/login", "/users/forgot-password",
+                                "/users/reset-password")
+                        .permitAll()
+
+                        .requestMatchers("/users/register", "/users/login").permitAll()
                         .requestMatchers("/users/**").permitAll()
+
+                        .anyRequest().authenticated()
                         .requestMatchers("/tasksignup/**").permitAll()
                         .anyRequest().authenticated());
 

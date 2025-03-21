@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -48,7 +49,13 @@ public class Organization {
 
     // One-to-Many Relationship with Task
     @OneToMany(mappedBy = "org", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("org") 
+    @JsonIgnoreProperties("org")
     private List<Task> tasks;
+
+    @NotEmpty(message = "Provide value for password")
+    @Size(min = 8, message = "Your password must be at least 8 characters long")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&]).{8,}$", message = "Password must contain at least one letter, one number, and one special character")
+    @Column(nullable = false)
+    private String password;
 
 }
