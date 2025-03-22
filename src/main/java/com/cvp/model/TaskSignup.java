@@ -10,11 +10,9 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
-
 @Entity
 @Table(name = "task_signup", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"volunteerName", "taskName", "signupDate"})
+        @UniqueConstraint(columnNames = { "volunteerName", "taskName", "signupDate" })
 })
 @Data
 public class TaskSignup {
@@ -38,5 +36,8 @@ public class TaskSignup {
     @Column(nullable = false, updatable = false)
     private LocalDate signupDate = LocalDate.now();
 
-}
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+}

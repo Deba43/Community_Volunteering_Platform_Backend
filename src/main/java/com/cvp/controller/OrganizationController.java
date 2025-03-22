@@ -33,13 +33,15 @@ public class OrganizationController {
     }
 
     @GetMapping("/all")
-    public List<Organization> getAllOrganizations() {
-        return organizationService.getAllOrganizations();
+    public ResponseEntity<List<Organization>> getAllOrganizations() {
+        List<Organization> orgs = organizationService.getAllOrganizations();
+        return ResponseEntity.ok(orgs);
     }
 
     @GetMapping("/{id}")
-    public Organization getOrganization(@PathVariable Long id) {
-        return organizationService.getOrganizationById(id);
+    public ResponseEntity<Organization> getOrganization(@PathVariable Long id) throws InvalidEntityException {
+        Organization organization = organizationService.getOrganizationById(id);
+        return ResponseEntity.ok(organization);
     }
 
     @PostMapping("/register")
